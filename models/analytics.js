@@ -1,26 +1,30 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const analyticsSchema = new mongoose.Schema({
-  url: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Number,
-    required: true,
-  },
-  ttfb: {
-    type: Number,
-  },
-  fcp: {
-    type: Number,
-  },
-  domLoad: {
-    type: Number,
-  },
-  windowLoad: {
-    type: Number,
-  }
-})
+const AnalyticsSchema = mongoose.Schema({
+    url: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Number,
+        required: true,
+    },
+    ttfb: {
+        type: Number,
+        required: true,
+    },
+    domLoad: {
+        type: Number,
+        required: true,
+    },
+    windowLoad: {
+        type: Number,
+        required: true,
+    },
+    resourceLoad: {
+        type: Number,
+        required: true,
+    }
+});
 
-module.exports = mongoose.model('Analytics', analyticsSchema)
+module.exports = mongoose.model('Analytics', AnalyticsSchema);

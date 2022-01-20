@@ -1,10 +1,9 @@
-const express = require('express')
-const router = express.Router()
-const AnalyticsModel = require('../models/analytics');
-
+const express = require('express');
+const router = express.Router();
+const Analytics = require('../models/Analytics');
 
 router.post('/metrics', (req, res) => {
-	const data = req.body
+	let data = req.body
 
 	if (!data.url && !data.date) {
 		return res.status(400).send({
@@ -12,7 +11,7 @@ router.post('/metrics', (req, res) => {
 		})
 	}
 
-	const metric = new AnalyticsModel({
+	const metric = new Analytics({
 		url: data.url,
 		date: data.date,
 		ttfb: data.ttfb,
@@ -29,17 +28,17 @@ router.post('/metrics', (req, res) => {
 		})
 		.catch((error) => {
 			res.status(500).send({
-				message: error.message
+				message: error.message || "Some error occurred while saving data."
 			})
 		})
-})
+});
 
 router.get('/measures', (req, res) => {
 	let startDate = req.query.startDate
 	let endDate = req.query.endDate
 
 	const findMetricsWithDates = async () => {
-		return await AnalyticsModel.find({
+		return await PerfanalyticsModel.find({
 			"date": {
 				'$gte': startDate,
 				'$lt': endDate,
@@ -68,12 +67,12 @@ router.get('/measures', (req, res) => {
 			measures
 		})
 	})
-})
+});
 
 router.get('/', (req, res) => {
 	return res.status(200).send({
-		message: "Welcome to the Perfanalytics API. Created by MMK."
+		message: "Connected to the Perfanalytics API. Created by MMK"
 	})
-})
+});
 
-module.exports = router
+module.exports = router;

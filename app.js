@@ -1,24 +1,29 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 5000
 require('dotenv').config()
+const express = require('express');
 const mongoose = require('mongoose');
-var cors = require('cors')
+const cors = require('cors')
 const analyticsRoute = require('./routes/analytics');
+const corsOptions = { origin: "*", optionsSuccessStatus: 200 };
+const PORT = process.env.PORT || 5000
+const HOST = process.env.PORT === 5000 ? `http://localhost:${PORT}` : "https://mmk-perf-api.herokuapp.com/";
 
-mongoose.connect(
-	'mongodb+srv://mmkursun:mmk-1907@cluster0.bbpjx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-	{ useNewUrlParser: true },
-).then(() => {
-    console.log('Successfully connected to the database')
-}).catch((error) => {
-    console.error('Could not connect to the database. Error : ', error)
-    process.exit()
-})
+const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded({ extended: false }));
 
-app.use('/analytics', analyticsRoute)
-
-app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
+app.listen(PORT, () => {
+	console.log(`Server is listening on port ${HOST}`)
+	mongoose.connect(
+		process.env.DB_URI,
+		{ useNewUrlParser: true, useUnifiedTopology: true },
+	).then(() => {
+		console.log('DB connected')
+	}).catch((error) => {
+		console.error('DB error', error)
+		process.exit()
+	})
+	analyticsRoute(app)
+});

@@ -1,13 +1,17 @@
 {
-  "name": "peranalyticsapi",
+  "name": "mmk-perfanalytics-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mertkursun/mmk-perfanalytics-api"
+  },
+  "author": "MMK",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",

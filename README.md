@@ -1,21 +1,12 @@
 # Performance Analytics API
 
+https://mmk-perf-api.herokuapp.com/
+
 ## Install
 
-    npm install
+npm install
 
-## Environment variables
-
-Environment variables should be set before running application
-
-```
-DB_CONNECTION=mongodbConnectionURI
-
-```
 ## Run the app in development mode
 
-    npm run start
+npm run start or yarn start
 
-
-## Getting a build
-- `npm run build` 

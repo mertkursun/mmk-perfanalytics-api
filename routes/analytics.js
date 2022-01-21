@@ -1,28 +1,17 @@
 const express = require('express');
 const Analytics = require('../models/Analytics');
 
-
-
 function router(app) {
 	app.post('/metrics', (req, res) => {
-		let data = req.body
+		const data = req.body
 
 		if (!data.url && !data.date) {
 			return res.status(400).send({
 				message: "URL or date is missing!",
 			})
 		}
-
-		const metric = new Analytics({
-			url: data.url,
-			date: data.date,
-			ttfb: data.ttfb,
-			fcp: data.fcp,
-			domLoad: data.domLoad,
-			windowLoad: data.windowLoad
-		})
-
-		metric.save()
+		console.log("req.body", data)
+		Analytics.create(data)
 			.then((success) => {
 				res.status(200).send({
 					message: "Success",
@@ -35,36 +24,36 @@ function router(app) {
 			})
 	});
 
-	app.get('/measures', (req, res) => {
-
+	app.get('/metrics', (req, res) => {
+		const startDate = req.query.startDate
+		const endDate = req.query.endDate
+		let filter = {}
+		if (startDate && endDate) {		
+			filter = { date : { $gt :  startDate, $lt : endDate}}
+		}
 		const findDates = async () => {
-			return await Analytics.find({
-				"date": {
-					'$gte': req.query.startDate,
-					'$lt': req.query.endDate,
-				}
-			}).exec().then((query) => {
+			return await Analytics.find(filter).exec().then((query) => {
 				return query
 			})
 		}
 
-		findDates().then((measure) => {
-			let measures = []
-
-			measure.forEach((measure) => {
-				measures.push({
-					id: measure._id,
-					url: measure.url,
-					date: moment(measure.date).format('lll'),
-					ttfb: measure.ttfb,
-					fcp: measure.fcp,
-					domLoad: measure.domLoad,
-					windowLoad: measure.windowLoad,
+		findDates().then((resp) => {
+			let metrics = []
+			console.log("resp", resp)
+			resp.forEach((val) => {
+				metrics.push({
+					id: val._id,
+					url: val.url,
+					date: val.date,
+					ttfb: val.ttfb,
+					fcp: val.fcp,
+					domLoad: val.domLoad,
+					windowLoad: val.windowLoad,
 				})
 			})
-
+			console.log("metrics", metrics)
 			res.status(200).send({
-				measures
+				metrics
 			})
 		})
 	});

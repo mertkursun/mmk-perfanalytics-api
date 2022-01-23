@@ -1,6 +1,6 @@
 # Performance Analytics API
 
-https://mmk-perf-api.herokuapp.com/
+https://mmk-perf-api.herokuapp.com/metrics
 
 ## Install
 

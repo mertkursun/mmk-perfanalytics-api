@@ -13,6 +13,10 @@ const AnalyticsSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    fcp: {
+        type: Number,
+        required: true,
+    },
     domLoad: {
         type: Number,
         required: true,

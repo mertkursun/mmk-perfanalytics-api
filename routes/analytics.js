@@ -36,7 +36,7 @@ function router(app) {
 				return query
 			})
 		}
-
+		
 		findDates().then((resp) => {
 			let metrics = []
 			console.log("resp", resp)
@@ -51,7 +51,6 @@ function router(app) {
 					windowLoad: val.windowLoad,
 				})
 			})
-			console.log("metrics", metrics)
 			res.status(200).send({
 				metrics
 			})

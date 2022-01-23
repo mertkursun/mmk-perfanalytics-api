@@ -10,3 +10,4 @@ npm install
 
 npm run start or yarn start
 
+Also you can this api as a docker container via "docker run -it -p 5010:5010 mertkursun/analytics-api"

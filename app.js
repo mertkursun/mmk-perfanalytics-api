@@ -5,7 +5,7 @@ const cors = require('cors')
 const analyticsRoute = require('./routes/analytics');
 const corsOptions = { origin: "*", optionsSuccessStatus: 200 };
 const PORT = process.env.PORT || 5000
-const HOST = process.env.PORT === 5000 ? `http://localhost:${PORT}` : "https://mmk-perf-api.herokuapp.com/";
+const HOST = process.env.PORT === 5010 ? `http://localhost:${PORT}` : "https://mmk-perf-api.herokuapp.com/";
 
 const app = express();
 

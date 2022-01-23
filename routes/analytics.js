@@ -1,5 +1,5 @@
 const express = require('express');
-const Analytics = require('../models/Analytics');
+const Analytics = require('../models/analytics');
 
 function router(app) {
 	app.post('/metrics', (req, res) => {
